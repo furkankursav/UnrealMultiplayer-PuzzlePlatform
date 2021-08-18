@@ -21,6 +21,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (MakeEditWidget=true))
 	FVector TargetLocation;
+
 public:
 
 	AMovingPlatform();
@@ -28,5 +29,11 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+private:
+
+	FVector GlobalTargetLocation;
+	FVector GlobalStartLocation;
+
 
 };

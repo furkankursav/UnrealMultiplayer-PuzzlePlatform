@@ -21,6 +21,8 @@ void AMovingPlatform::BeginPlay()
 	SetReplicates(true);
 	SetReplicatingMovement(true);
 	
+	GlobalStartLocation = GetActorLocation();
+	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
 
 
 }
@@ -33,12 +35,32 @@ void AMovingPlatform::Tick(float DeltaTime)
 	if (HasAuthority())
 	{
 		FVector Location = GetActorLocation();
-		FVector GlobalTargetLoc = GetTransform().TransformPosition(TargetLocation);
-		FVector Direction = (GlobalTargetLoc - Location).GetSafeNormal();
+
+		// length of all travel
+		float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
+
+		// how much did we go
+		float TravelledJourney = (Location - GlobalStartLocation).Size();
+		
+		// Swap condition
+		if (TravelledJourney >= JourneyLength)
+		{
+			FVector TempLoc = GlobalTargetLocation;
+			GlobalTargetLocation = GlobalStartLocation;
+			GlobalStartLocation = TempLoc;
+			TravelledJourney = 0;
+
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("SWAP!"));
+
+		}
+
+
+		FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
 
 		Location += Direction * Speed * DeltaTime;
 
 		SetActorLocation(Location);
+
 	}
 
 
