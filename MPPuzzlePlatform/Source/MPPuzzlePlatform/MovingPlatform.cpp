@@ -7,9 +7,22 @@ AMovingPlatform::AMovingPlatform()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	
 	SetMobility(EComponentMobility::Movable);
 
 	Speed = 10.f;
+}
+
+void AMovingPlatform::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+	SetReplicates(true);
+	SetReplicatingMovement(true);
+	
+
+
 }
 
 void AMovingPlatform::Tick(float DeltaTime)
