@@ -34,34 +34,48 @@ void AMovingPlatform::Tick(float DeltaTime)
 	// runs only on server.
 	if (HasAuthority())
 	{
-		FVector Location = GetActorLocation();
-
-		// length of all travel
-		float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
-
-		// how much did we go
-		float TravelledJourney = (Location - GlobalStartLocation).Size();
-		
-		// Swap condition
-		if (TravelledJourney >= JourneyLength)
+		if (ActiveTriggers > 0)
 		{
-			FVector TempLoc = GlobalTargetLocation;
-			GlobalTargetLocation = GlobalStartLocation;
-			GlobalStartLocation = TempLoc;
-			TravelledJourney = 0;
+			FVector Location = GetActorLocation();
 
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("SWAP!"));
+			// length of all travel
+			float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
 
+			// how much did we go
+			float TravelledJourney = (Location - GlobalStartLocation).Size();
+
+			// Swap condition
+			if (TravelledJourney >= JourneyLength)
+			{
+				FVector TempLoc = GlobalTargetLocation;
+				GlobalTargetLocation = GlobalStartLocation;
+				GlobalStartLocation = TempLoc;
+				TravelledJourney = 0;
+
+				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("SWAP!"));
+
+			}
+
+
+			FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
+
+			Location += Direction * Speed * DeltaTime;
+
+			SetActorLocation(Location);
 		}
-
-
-		FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
-
-		Location += Direction * Speed * DeltaTime;
-
-		SetActorLocation(Location);
+		
 
 	}
 
 
+}
+
+void AMovingPlatform::AddActiveTrigger()
+{
+	ActiveTriggers++;
+}
+
+void AMovingPlatform::RemoveActiveTrigger()
+{
+	ActiveTriggers--;
 }

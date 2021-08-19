@@ -9,6 +9,7 @@
 
 class UBoxComponent;
 class UStaticMeshComponent;
+class AMovingPlatform;
 
 UCLASS()
 class MPPUZZLEPLATFORM_API APlatformTrigger : public AActor
@@ -39,5 +40,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	TArray<AMovingPlatform*> PlatformsToTrigger;
 
 };

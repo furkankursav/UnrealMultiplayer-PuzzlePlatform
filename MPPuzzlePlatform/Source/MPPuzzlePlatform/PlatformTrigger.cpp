@@ -4,6 +4,7 @@
 #include "PlatformTrigger.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "MovingPlatform.h"
 
 // Sets default values
 APlatformTrigger::APlatformTrigger()
@@ -35,12 +36,21 @@ void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Activated!"));
+	for (int i = 0; i < PlatformsToTrigger.Num(); i++)
+	{
+		PlatformsToTrigger[i]->AddActiveTrigger();
+	}
 }
 
 void APlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
 	int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Deactivated!"));
+
+	for (int i = 0; i < PlatformsToTrigger.Num(); i++)
+	{
+		PlatformsToTrigger[i]->RemoveActiveTrigger();
+	}
 }
 
 // Called every frame

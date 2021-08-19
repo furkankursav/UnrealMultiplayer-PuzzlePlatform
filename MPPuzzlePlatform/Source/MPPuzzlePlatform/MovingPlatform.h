@@ -30,10 +30,16 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void AddActiveTrigger();
+	void RemoveActiveTrigger();
+
 private:
 
 	FVector GlobalTargetLocation;
 	FVector GlobalStartLocation;
+
+	UPROPERTY(EditAnywhere)
+	int ActiveTriggers = 1;
 
 
 };
