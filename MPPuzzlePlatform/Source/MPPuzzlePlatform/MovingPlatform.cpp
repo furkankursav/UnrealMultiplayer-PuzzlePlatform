@@ -52,7 +52,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 				GlobalStartLocation = TempLoc;
 				TravelledJourney = 0;
 
-				GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("SWAP!"));
+				// add message into screen
+				// GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("SWAP!"));
 
 			}
 
@@ -77,5 +78,6 @@ void AMovingPlatform::AddActiveTrigger()
 
 void AMovingPlatform::RemoveActiveTrigger()
 {
-	ActiveTriggers--;
+	if(ActiveTriggers > 0)
+		ActiveTriggers--;
 }
