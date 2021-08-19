@@ -12,8 +12,10 @@ APlatformTrigger::APlatformTrigger()
 	PrimaryActorTick.bCanEverTick = true;
 
 	BoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
-	RootComponent = BoxComp;
+	if (!ensure(BoxComp != nullptr)) return;
 
+	RootComponent = BoxComp;
+	
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	MeshComp->SetupAttachment(GetRootComponent());
 
