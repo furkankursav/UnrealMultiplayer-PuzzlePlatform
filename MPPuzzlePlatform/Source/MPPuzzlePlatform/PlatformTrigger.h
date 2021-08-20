@@ -10,6 +10,7 @@
 class UBoxComponent;
 class UStaticMeshComponent;
 class AMovingPlatform;
+class UMaterial;
 
 UCLASS()
 class MPPUZZLEPLATFORM_API APlatformTrigger : public AActor
@@ -29,6 +30,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(EditAnywhere, Category = "Platform")
+	UMaterial* ActivatedMaterial;
+
+	UPROPERTY(EditAnywhere, Category = "Platform")
+	UMaterial* DeactivatedMaterial;
 
 	UFUNCTION()
 	void  OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 

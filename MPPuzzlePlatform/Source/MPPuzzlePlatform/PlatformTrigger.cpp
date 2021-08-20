@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "MovingPlatform.h"
+#include "Materials/Material.h"
 
 // Sets default values
 APlatformTrigger::APlatformTrigger()
@@ -35,7 +36,8 @@ void APlatformTrigger::BeginPlay()
 void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Activated!"));
+	if(ActivatedMaterial)
+		MeshComp->SetMaterial(0, ActivatedMaterial);
 	for (int i = 0; i < PlatformsToTrigger.Num(); i++)
 	{
 		PlatformsToTrigger[i]->AddActiveTrigger();
@@ -45,7 +47,8 @@ void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
 void APlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
 	int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Deactivated!"));
+	if (DeactivatedMaterial)
+		MeshComp->SetMaterial(0, DeactivatedMaterial);
 
 	for (int i = 0; i < PlatformsToTrigger.Num(); i++)
 	{
