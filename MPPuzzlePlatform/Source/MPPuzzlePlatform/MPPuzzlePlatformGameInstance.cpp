@@ -26,4 +26,12 @@ void UMPPuzzlePlatformGameInstance::Host()
 void UMPPuzzlePlatformGameInstance::Join(const FString& Address)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
+	
+	APlayerController* PC = GetFirstLocalPlayerController();
+
+	if (PC)
+	{
+		PC->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	}
+
 }
