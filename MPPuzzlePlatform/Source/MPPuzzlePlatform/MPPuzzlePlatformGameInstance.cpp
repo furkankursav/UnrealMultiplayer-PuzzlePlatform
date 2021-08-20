@@ -17,6 +17,10 @@ void UMPPuzzlePlatformGameInstance::Init()
 void UMPPuzzlePlatformGameInstance::Host()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, TEXT("Hosting"));
+
+	GetWorld()->ServerTravel("/Game/_Game/Levels/Level01?listen");
+
+
 }
 
 void UMPPuzzlePlatformGameInstance::Join(const FString& Address)
