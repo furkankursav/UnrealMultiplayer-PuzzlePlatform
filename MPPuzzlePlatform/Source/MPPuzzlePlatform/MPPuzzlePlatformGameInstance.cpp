@@ -13,3 +13,13 @@ void UMPPuzzlePlatformGameInstance::Init()
 	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init!"));
 
 }
+
+void UMPPuzzlePlatformGameInstance::Host()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, TEXT("Hosting"));
+}
+
+void UMPPuzzlePlatformGameInstance::Join(const FString& Address)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
+}
